@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* 追加のスタイルが必要な場合はここに追加します */
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <h1 class="my-5">ToDo List</h1>
+
+      <div class="col-6 mb-5">
+        <form id="todoForm" onsubmit="return false;">
+          <div class="input-group mb-3">
+            <input id="add-text" class="form-control" placeholder="Add new todo" />
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="button-addon2">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-9 d-flex">
+        <div id="todo-count">全てのタスク数: 0</div>
+        <div id="complete-item-num" class="mx-3">To do 完了タスク数: 0</div>
+        <div id="todo-item-num">To do 未完了タスク数: 0</div>
+      </div>
+      <div class="col-8">
+        <ul class="list-group list-unstyled" id="todo-list">
+          <!-- <li>
+            <div class="list-row">
+              <div class="todo-col">
+                <input type="checkbox">
+                <p class="todo-item">勉強</p>
+              </div>
+              <div class="button-list">
+                <button class="edit-button">編集</button>
+                <button class="delete-button">削除</button>
+              </div>
+            </div>
+          </li> -->
+        </ul>
+      </div>  
+    </div>
+
+
+    <script src="./index.js"></script>
+  </body>
+</html>
