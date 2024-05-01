@@ -30,9 +30,37 @@ const onClickAdd = () => {
   editButton.className = 'edit-button';
   editButton.innerText = "編集";
   editButton.addEventListener('click', () => {
+    editButton.style.display = 'none';
     const editTarget = editButton.closest('div').parentElement.firstElementChild.lastElementChild;
-    const newText = prompt("Edit task?", editTarget.textContent);
-    editTarget.innerText = newText;
+    // const newText = prompt("Edit task?", editTarget.textContent);
+    // editTarget.innerText = newText;
+    const currentText = editTarget.innerText;
+    const inputField = document.createElement('input');
+    const saveButton = document.createElement('button');
+    inputField.value = currentText;
+    inputField.className = 'form-control'; 
+
+    saveButton.className = 'btn btn-primary';
+    saveButton.type = 'save';
+    saveButton.innerText = 'Save';
+
+    editTarget.replaceWith(inputField);
+    inputField.after(saveButton); 
+
+    saveButton.addEventListener('click', () => {
+      const newText = inputField.value;
+      if (newText === "") {
+        alert("タスクを入力してください。");
+        inputField.focus();
+      } else {
+        const newP = document.createElement('p');
+        newP.className = 'todo-item';
+        newP.innerText = newText;
+        inputField.replaceWith(newP);
+        saveButton.remove();
+        editButton.style.display = 'inline-block';
+      }
+    })
   });
 
   // 削除
