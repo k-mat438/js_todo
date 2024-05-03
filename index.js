@@ -25,65 +25,28 @@ const onClickAdd = () => {
   todo.appendChild(p);
   div.appendChild(todo);
 
+  // 追加された時のアイテム数の変化
+  ItemCount += 1;
+  IncompleteItemCount += 1;
+  const totalItemCountEl = document.getElementById('todo-count');
+  const completeItemCountEl = document.getElementById('complete-item-count');
+  const todoItemCountEl = document.getElementById('todo-item-count');
+  todoItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
+  totalItemCountEl.textContent = `全てのタスク数：${ItemCount}`;
+  
   // 編集
   const editButton = document.createElement('button');
   editButton.className = 'edit-button';
   editButton.innerText = "編集";
-  editButton.addEventListener('click', () => {
-    editButton.style.display = 'none';
-    const editTarget = editButton.closest('div').parentElement.firstElementChild.lastElementChild;
-    // const newText = prompt("Edit task?", editTarget.textContent);
-    // editTarget.innerText = newText;
-    const currentText = editTarget.innerText;
-    const inputField = document.createElement('input');
-    const saveButton = document.createElement('button');
-    inputField.value = currentText;
-    inputField.className = 'form-control'; 
-
-    saveButton.className = 'btn btn-primary';
-    saveButton.type = 'save';
-    saveButton.innerText = 'Save';
-
-    editTarget.replaceWith(inputField);
-    inputField.after(saveButton); 
-
-    saveButton.addEventListener('click', () => {
-      const newText = inputField.value;
-      if (newText === "") {
-        alert("タスクを入力してください。");
-        inputField.focus();
-      } else {
-        const newP = document.createElement('p');
-        newP.className = 'todo-item';
-        newP.innerText = newText;
-        inputField.replaceWith(newP);
-        saveButton.remove();
-        editButton.style.display = 'inline-block';
-      }
-    })
-  });
+  editButton.addEventListener('click', () => editItem(editButton));
 
   // 削除
   const deleteButton = document.createElement('button');
   deleteButton.className = 'delete-button';
   deleteButton.innerText = "削除";
-  deleteButton.addEventListener('click', () => {
-    let result = window.confirm('本当に削除してもよろしいですか');
-    if (result) {
-      const deleteTarget = deleteButton.closest('li');
-      document.getElementById('todo-list').removeChild(deleteTarget);
-      ItemCount -= 1;
-      document.getElementById('todo-count').textContent = `全てのタスク数：${ItemCount}`;
-      if (checkbox.checked) {
-        CompleteItemCount -= 1;
-        document.getElementById('complete-item-num').textContent = `To do 完了タスク数：${CompleteItemCount}`;
-      } else {
-        IncompleteItemCount -= 1;
-        document.getElementById('todo-item-num').textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
-      }
-      
-    };
-  });
+  const deleteArgs = { deleteButton, checkbox, totalItemCountEl, completeItemCountEl, todoItemCountEl };
+  deleteButton.addEventListener('click', () => deleteItem(deleteArgs));
+
   const buttonList = document.createElement('div');
   buttonList.className = 'button-list';
   buttonList.appendChild(editButton);
@@ -92,28 +55,9 @@ const onClickAdd = () => {
 
   list.appendChild(div); 
   document.getElementById('todo-list').appendChild(list);
-
-  // 追加された時のアイテム数の変化
-  ItemCount += 1;
-  IncompleteItemCount += 1;
-  document.getElementById('todo-item-num').textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
-  document.getElementById('todo-count').textContent = `全てのタスク数：${ItemCount}`;
-
+  
   // チェックボックスをクリックした時
-  checkbox.addEventListener('click',() => {
-    if (checkbox.checked) {
-      CompleteItemCount += 1;
-      IncompleteItemCount -= 1;
-      document.getElementById('todo-item-num').textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
-      document.getElementById('complete-item-num').textContent = `To do 完了タスク数：${CompleteItemCount}`;
-    } else {
-      CompleteItemCount -= 1;
-      IncompleteItemCount += 1;
-      document.getElementById('todo-item-num').textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
-      document.getElementById('complete-item-num').textContent = `To do 完了タスク数：${CompleteItemCount}`;
-    }
-    
-  });
+  checkbox.addEventListener('click',() => changeItemStatus(checkbox,todoItemCountEl,completeItemCountEl));
 };
 
 document.getElementById('button-addon2').addEventListener('click',onClickAdd);
