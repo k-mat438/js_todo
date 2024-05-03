@@ -35,29 +35,29 @@ function deleteItem(deleteArgs) {
     if (result) {
       const deleteTarget = deleteArgs.deleteButton.closest('li');
       document.getElementById('todo-list').removeChild(deleteTarget);
-      ItemCount -= 1;
-      deleteArgs.totalItemCountEl.textContent = `全てのタスク数：${ItemCount}`;
+      totalItemCount -= 1;
+      deleteArgs.totalItemCountEl.textContent = `全てのタスク数：${totalItemCount}`;
       if (deleteArgs.checkbox.checked) {
         CompleteItemCount -= 1;
         deleteArgs.completeItemCountEl.textContent = `To do 完了タスク数：${CompleteItemCount}`;
       } else {
         IncompleteItemCount -= 1;
-        deleteArgs.todoItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
+        deleteArgs.incompleteItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
       }
       
     };
 }
 
-function changeItemStatus(checkbox,todoItemCountEl,completeItemCountEl) {
+function changeItemStatus(checkbox,incompleteItemCountEl,completeItemCountEl) {
   if (checkbox.checked) {
     CompleteItemCount += 1;
     IncompleteItemCount -= 1;
-    todoItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
+    incompleteItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
     completeItemCountEl.textContent = `To do 完了タスク数：${CompleteItemCount}`;
   } else {
     CompleteItemCount -= 1;
     IncompleteItemCount += 1;
-    todoItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
+    incompleteItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
     completeItemCountEl.textContent = `To do 完了タスク数：${CompleteItemCount}`;
   }
 }
