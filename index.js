@@ -3,7 +3,7 @@
 // 追加ボタン
 let IncompleteItemCount = 0;
 let CompleteItemCount = 0;
-let ItemCount = 0;
+let totalItemCount = 0;
 const onClickAdd = () => {
   const inputText = document.getElementById('add-text').value;
   if (inputText == "") {
@@ -26,13 +26,13 @@ const onClickAdd = () => {
   div.appendChild(todo);
 
   // 追加された時のアイテム数の変化
-  ItemCount += 1;
+  totalItemCount += 1;
   IncompleteItemCount += 1;
-  const totalItemCountEl = document.getElementById('todo-count');
+  const totalItemCountEl = document.getElementById('total-todo-count');
   const completeItemCountEl = document.getElementById('complete-item-count');
-  const todoItemCountEl = document.getElementById('todo-item-count');
-  todoItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
-  totalItemCountEl.textContent = `全てのタスク数：${ItemCount}`;
+  const incompleteItemCountEl = document.getElementById('incomplete-item-count');
+  incompleteItemCountEl.textContent = `To do 未完了タスク数：${IncompleteItemCount}`;
+  totalItemCountEl.textContent = `全てのタスク数：${totalItemCount}`;
   
   // 編集
   const editButton = document.createElement('button');
@@ -44,7 +44,7 @@ const onClickAdd = () => {
   const deleteButton = document.createElement('button');
   deleteButton.className = 'delete-button';
   deleteButton.innerText = "削除";
-  const deleteArgs = { deleteButton, checkbox, totalItemCountEl, completeItemCountEl, todoItemCountEl };
+  const deleteArgs = { deleteButton, checkbox, totalItemCountEl, completeItemCountEl, incompleteItemCountEl };
   deleteButton.addEventListener('click', () => deleteItem(deleteArgs));
 
   const buttonList = document.createElement('div');
@@ -57,7 +57,7 @@ const onClickAdd = () => {
   document.getElementById('todo-list').appendChild(list);
   
   // チェックボックスをクリックした時
-  checkbox.addEventListener('click',() => changeItemStatus(checkbox,todoItemCountEl,completeItemCountEl));
+  checkbox.addEventListener('click',() => changeItemStatus(checkbox,incompleteItemCountEl,completeItemCountEl));
 };
 
 document.getElementById('button-addon2').addEventListener('click',onClickAdd);
